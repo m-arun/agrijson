@@ -13,7 +13,7 @@ folders = []
 
 
 # Recursively list out classes and properties paths
-output_file = "iudx.jsonld"
+output_file = "adex.jsonld"
 
 for (dirpath, dirnames, filenames) in os.walk("./"):
 
@@ -33,7 +33,7 @@ context = {}
 
 contextsources["type"] = "@type"
 contextsources["id"] = "@id"
-contextsources["@vocab"] = "https://voc.iudx.org.in/"
+contextsources["@vocab"] = "https://agrijson.adex.org.in/"
 
 for fldr in folders:
     for fl in os.listdir(fldr):
@@ -43,7 +43,7 @@ for fldr in folders:
                 contextsources = {**contextsources,
                                   **schema["@context"]}
                 context = {**context,
-                           **{fl[:-7]: {"@id": "iudx:"+fl[:-7]}}}
+                           **{fl[:-7]: {"@id": "adex:"+fl[:-7]}}}
             except Exception as e:
                 print("Class - " + fl[:-7] + " failed")
                 print(e)

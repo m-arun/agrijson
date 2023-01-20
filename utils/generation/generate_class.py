@@ -6,8 +6,8 @@ import shutil
 
 
 classes = ['owl:Class', 'rdfs:Class']
-properties = ["iudx:TextProperty", "iudx:QuantitativeProperty", "iudx:StructuredProperty", "iudx:GeoProperty", "iudx:TimeProperty", "iudx:Relationship", 'rdf:Property'] 
-relation = ["iudx:Relationship"]
+properties = ["adex:TextProperty", "adex:QuantitativeProperty", "adex:StructuredProperty", "adex:GeoProperty", "adex:TimeProperty", "adex:Relationship", 'rdf:Property'] 
+relation = ["adex:Relationship"]
 class_folder_path = "/tmp/all_classes/"
 properties_folder_path = "/tmp/all_properties/"
 examples_path = "/tmp/all_examples"
@@ -141,8 +141,8 @@ class Vocabulary:
                         error_list.append({"type ": "subClassOf missing" , "in": n["@graph"]["@id"]})
                         pass
                         
-                if "iudx:domainIncludes" in n["@graph"] :
-                    for i in n["@graph"]["iudx:domainIncludes"]:
+                if "adex:domainIncludes" in n["@graph"] :
+                    for i in n["@graph"]["adex:domainIncludes"]:
                         try:
                             self.g.add_edge(n["@graph"]["@id"], i["@id"], "domainIncludes")
                             self.g.add_edge(i["@id"], n["@graph"]["@id"], "domainOf")      
@@ -150,8 +150,8 @@ class Vocabulary:
                             error_list.append({"type ": "domainIncludes missing" , "value": i["@id"], "in": n["@graph"]["@id"]})
                             pass
                         
-                if "iudx:rangeIncludes" in n["@graph"] :
-                    for i in n["@graph"]["iudx:rangeIncludes"]:
+                if "adex:rangeIncludes" in n["@graph"] :
+                    for i in n["@graph"]["adex:rangeIncludes"]:
                         try:
                             self.g.add_edge(n["@graph"]["@id"], i["@id"], "rangeIncludes")
                             self.g.add_edge(i["@id"], n["@graph"]["@id"], "rangeOf")
@@ -184,19 +184,20 @@ class Vocabulary:
     def make_master(self):
             master_dict = OrderedDict()
             master_dict = {"@context":{}}
-            with open("iudx.jsonld" , "w") as master_file:
+            with open("adex.jsonld" , "w") as master_file:
                 for n in self.json_ld_graph:
                     master_dict["@context"][str(n["@graph"]["@id"].split(":")[-1])] = {"@id":n["@graph"]["@id"]}
-                    if "iudx:Relationship" in n["@graph"]["@type"]:
+                    if "adex:Relationship" in n["@graph"]["@type"]:
                          master_dict["@context"][str(n["@graph"]["@id"].split(":")[-1])] = {"@id":n["@graph"]["@id"], "@type":"@id"}
                     master_dict["@context"]["type"] = "@type"
                     master_dict["@context"]["id"] = "@id"
-                    master_dict["@context"]["@vocab"] =  "https://voc.iudx.org.in/"
+                    master_dict["@context"]["@vocab"] =  "https://agrijson.adex.org.in/"
                     master_dict["@context"]["rdfs"] =  "http://www.w3.org/2000/01/rdf-schema#"
                     master_dict["@context"]["skos"] = "http://www.w3.org/2004/02/skos/core#"
                     master_dict["@context"]["schema"]= "http://schema.org/"
                     master_dict["@context"]["owl"]= "http://www.w3.org/2002/07/owl#"
                     master_dict["@context"]["iudx"] = "https://voc.iudx.org.in/"
+                    master_dict["@context"]["adex"] =  "https://agrijson.adex.org.in/"
                     master_dict["@context"]["geojson"] = "https://purl.org/geojson/vocab#"
                     master_dict["@context"]["rdf"] =  "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                     master_dict["@context"]["xsd"] = "http://www.w3.org/2001/XMLSchema#"

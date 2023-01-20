@@ -7,7 +7,7 @@ import copy
 from collections import OrderedDict
 from distutils.dir_util import copy_tree
 
-""" Paths for IUDX classes and properties."""
+""" Paths for ADEX classes and properties."""
 from_classes = ["base-schemas/classes/", "data-models/classes/"]
 from_properties= ["base-schemas/properties/", "data-models/properties/"]
 """ Path of the temporary directory to house all classes."""
@@ -40,7 +40,7 @@ def generate(class_path, property_path):
     for class_file in glob.glob(os.path.join(class_path, '*.jsonld')):
         domain = class_file.replace(class_path, "")
         domain = domain.replace(".jsonld", "")
-        domain = "iudx:" + domain
+        domain = "adex:" + domain
         with open(class_file, "r+") as class_obj:
             new_dict = OrderedDict()
             obj = json.load(class_obj)
@@ -59,25 +59,23 @@ def generate(class_path, property_path):
                     prop = json.load(prop_obj)
                     if "@graph" in prop.keys():
                         try:
-                            includes = find(domain, prop["@graph"][0]["iudx:domainIncludes"])
+                            includes = find(domain, prop["@graph"][0]["adex:domainIncludes"])
                             if includes is not None:
                                 new_dict["@graph"].append(prop["@graph"][0])
                         except KeyError:
                             # Uncomment to check filename in which domainIncludes is missing
-                            #print("iudx:domainIncludes not in " + prop_file)
                             pass
                         try:
-                            includes = find(domain, prop["@graph"][0]["iudx:rangeIncludes"])
+                            includes = find(domain, prop["@graph"][0]["adex:rangeIncludes"])
                             if includes is not None:
                                 new_dict["@graph"].append(prop["@graph"][0])
                         except KeyError:
                             # Uncomment to check filename in which rangeIncludes is missing
-                            #print("iudx:rangeIncludes not in " + prop_file)
                             pass
                     else:
                         print("@graph missing in " + prop_file)
             os.makedirs(os.path.dirname(tmp_expanded_path), exist_ok=True)
-            with open(tmp_expanded_path + domain.replace("iudx:", "") + ".jsonld", "w+") as new_file:
+            with open(tmp_expanded_path + domain.replace("adex:", "") + ".jsonld", "w+") as new_file:
                 json.dump(new_dict, new_file, indent=4)
 
 
