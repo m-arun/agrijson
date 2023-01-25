@@ -14,10 +14,7 @@
                 "rdfs:Class"
             ],
             "rdfs:comment": "Describes the manufacture information of the device, sensor or system in consideration.",
-            "rdfs:label": "ModelInfo",
-            "rdfs:isDefinedBy": {
-                "@id": "adex:"
-            }
+            "rdfs:label": "ModelInfo"
         }
     ]
 }
