@@ -16,7 +16,7 @@
             "rdfs:comment": "Data models that pertain to the environment domain",
             "rdfs:label": "Process",
             "rdfs:subClassOf": {
-                "@id": "adex:Concept"
+                "@id": "adex:DataModel"
             }
         }
     ]
