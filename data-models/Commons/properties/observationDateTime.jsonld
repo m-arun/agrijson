@@ -17,9 +17,6 @@
 		],
 		"rdfs:comment": "Last reported time of observation.",
 		"rdfs:label": "observationDateTime",
-		"rdfs:isDefinedBy": {
-			"@id": "adex:"
-		},
 		"adex:domainIncludes": [
 			{
 				"@id": "adex:Weather"

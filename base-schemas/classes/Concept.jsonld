@@ -15,9 +15,6 @@
             ],
             "rdfs:comment": "Class of all Data Models.",
             "rdfs:label": "Concept",
-            "rdfs:isDefinedBy": {
-                "@id": "adex:"
-            },
             "rdfs:subClassOf": {
                 "@id": "adex:Thing"
             }
